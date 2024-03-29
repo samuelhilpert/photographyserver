@@ -4,8 +4,7 @@
   "description": "server photography",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "jest"
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
