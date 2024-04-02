@@ -1,14 +1,14 @@
 // server.js
 
-const express = require('express');
-const knex = require('knex');
+const express = require('express'); // Importiere den express Webserver
+const knex = require('knex'); // Importiere das knex-Modul
 const cors = require('cors'); // Importiere das cors-Modul
 
-const app = express();
-const PORT = process.env.PORT || 3001;
-// Aktiviere CORS für alle Anfragen
+const app = express(); // Erstelle eine neue Express-App
+const PORT = process.env.PORT || 3001; // Port 3001 oder den Port, der bereitgestllt wird
 
-app.use(cors());
+
+app.use(cors());  // Aktiviere CORS für alle Anfragen
 
 // Konfiguration für die MySQL-Datenbank
 const db = knex({
@@ -22,17 +22,14 @@ const db = knex({
     },
 });
 
-app.use(express.json());
+app.use(express.json()); // Aktiviere das Parsen von JSON-Daten
 
+// Test-Route
 app.get('/test', (req, res) => {
-    res.send('Hello from express server')
+    res.send('Hello from express server from Azure')
 })
 
-app.get('/testneu', async (req, res) => {
-    const tags = await db.select('*').from('allgemein');
-    res.json(tags);
-})
-
+// Route zum Einfügen von allgemeinen Anfragen
 app.post('/InsertAllgemeineAnfragen', async (req, res) => {
     const {vorname, nachname, tag, wuensche, vorstellungen, mail, anmerkungen} = req.body; // Annahme: Die Werte für front und back kommen im Request Body an
     console.log(req.body);
@@ -59,6 +56,7 @@ app.post('/InsertAllgemeineAnfragen', async (req, res) => {
 
 })
 
+// Route zum Einfügen von individuellen Anfragen
 app.post('/InsertIndividuelleAnfragen', async (req, res) => {
     const {vorname, nachname, email, kategorie, motiv, stunden, bilder, tag, kosten} = req.body; // Annahme: Die Werte für front und back kommen im Request Body an
     console.log(req.body);
@@ -84,6 +82,7 @@ app.post('/InsertIndividuelleAnfragen', async (req, res) => {
 
 })
 
+// Route zum Berechnen des Preises
 app.post('/calculatePrice', async (req, res) => {
     const {category, motiv, stunden, bilder} = req.body;
     console.log(req.body);
