@@ -1,14 +1,14 @@
 // server.js
 
-const express = require('express'); // Importiere den express-Webserver
-const knex = require('knex'); // Importiere den knex-Querybuilder
+const express = require('express');
+const knex = require('knex');
 const cors = require('cors'); // Importiere das cors-Modul
 
-const app = express(); // Erstelle eine Instanz des express-Webserver
-const PORT = 3001; // Definiere den Port, auf dem der Webserver laufen soll
+const app = express();
+const PORT = process.env.PORT || 3001;
+// Aktiviere CORS für alle Anfragen
 
-
-app.use(cors()); // Aktiviere CORS für den Webserver
+app.use(cors());
 
 // Konfiguration für die MySQL-Datenbank
 const db = knex({
@@ -22,14 +22,17 @@ const db = knex({
     },
 });
 
-app.use(express.json()); // Aktiviere das Parsen von JSON-Requests
+app.use(express.json());
 
-// Test-Route
 app.get('/test', (req, res) => {
-    res.send('Hello from express server from Azure');
+    res.send('Hello from express server')
 })
 
-// Endpunkt zum Einfügen von allgemeinen Anfragen in die Datenbank
+app.get('/testneu', async (req, res) => {
+    const tags = await db.select('*').from('allgemein');
+    res.json(tags);
+})
+
 app.post('/InsertAllgemeineAnfragen', async (req, res) => {
     const {vorname, nachname, tag, wuensche, vorstellungen, mail, anmerkungen} = req.body; // Annahme: Die Werte für front und back kommen im Request Body an
     console.log(req.body);
@@ -56,7 +59,6 @@ app.post('/InsertAllgemeineAnfragen', async (req, res) => {
 
 })
 
-// Endpunkt zum Einfügen von individuellen Anfragen in die Datenbank
 app.post('/InsertIndividuelleAnfragen', async (req, res) => {
     const {vorname, nachname, email, kategorie, motiv, stunden, bilder, tag, kosten} = req.body; // Annahme: Die Werte für front und back kommen im Request Body an
     console.log(req.body);
@@ -82,7 +84,6 @@ app.post('/InsertIndividuelleAnfragen', async (req, res) => {
 
 })
 
-// Endpunkt zum Berechnen des Preises, der auf der Webseite angezeigt wird
 app.post('/calculatePrice', async (req, res) => {
     const {category, motiv, stunden, bilder} = req.body;
     console.log(req.body);
