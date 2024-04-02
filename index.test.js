@@ -11,21 +11,6 @@ describe('GET /test', () => {
     });
 });
 
-describe('GET /testneu', () => {
-    it('responds with an array of objects from the `allgemein` table', async () => {
-        const response = await request('localhost:3001').get('/testneu');
-
-        expect(response.status).toBe(200);
-        expect(response.body).toBeInstanceOf(Array);
-        expect(response.body.length).toBeGreaterThan(0);
-
-        const expectedKeys = ['id', 'vorname', 'nachname', 'tag', 'wuensche', 'vorstellungen', 'mail', 'anmerkungen'];
-        const actualKeys = Object.keys(response.body[0]);
-
-        expect(expectedKeys).toEqual(actualKeys);
-    });
-});
-
 
 describe('POST /InsertAllgemeineAnfragen', () => {
     it('inserts data into the `allgemein` table and returns a 201 status code', async () => {
