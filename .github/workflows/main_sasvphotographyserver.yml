@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy Node.js app to Azure Web App - sasvphotographyserver
+name: Build and deploy Node.js app to Azure Web App - sasvserver
 
 on:
   push:
@@ -57,15 +57,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_9A5FFF9F9E8E442997E3B89B022B47DF }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_EE1945DDE315424C9254F1F3D6BA4F99 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B9F46E5C51614DA2BA3F393C0253CACD }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1F38B1CD56D840009B1781E81A795FEB }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E3D0F360ECBC4765A7DDE581F4BD3294 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_0EAA2D027E984FC9B46217EFA5CE3B72 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'sasvphotographyserver'
+          app-name: 'sasvserver'
           slot-name: 'Production'
           package: .
           
